@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>    
+</head>
+<body>
+    <div id="target1"></div>
+    <div id="target2"></div>
+    <div id="target3"></div>
+    <div id="target4"></div>
+    <div id="target5"></div>
+
+
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="babel-browser.js"></script>
+    <script type="text/babel">  // Notice the script type attribute, which is required for the babel to work its magic
+
+        /* Stateless Functional component */
+        function HelloYou(props) {
+            return <h1>Hello You, {props.name}</h1>;
+        }
+        
+        /* Rendreing the HelloYou component with direct JSX syntax in the render call.
+            Notice the 'attribute' "name", which gets passed into component props.
+         */
+        ReactDOM.render(
+            <HelloYou name="Lasse" />,
+            document.getElementById('target1')
+        );
+
+        /* Alternative way of renderin with pure JavaScript based React.createElement call.  */
+        ReactDOM.render(
+            React.createElement(
+                HelloYou,
+                { name: "Developer" } // props
+            ),
+            document.getElementById('target2')
+        );
+
+
+        /* Older React style of creating components with React.createClass. This will create a stateful 
+           component, but is now deprecated. See the browser console for warning. */
+        var HWClass = React.createClass({            
+            render: function() {              
+                return <div>Hello React.createClass world, which is deprecated</div>;
+            }
+        });
+
+        ReactDOM.render(
+            <HWClass />,
+            document.getElementById('target3')
+        );
+
+
+
+        /*  The current way of creating stateful React components is by using ES6 classes.
+            Notice that per the class syntax you need use this keyword to access class members like props. 
+        */
+        class ES6ClassExample extends React.Component
+        {
+            render()
+            {
+                return <div>Hello ES6 class world with props { this.props.exampleProp }</div>
+            }
+        }        
+
+        ReactDOM.render(
+            <ES6ClassExample exampleProp="jiihaa" />,
+            document.getElementById('target4')
+        );
+
+
+
+        /*  Bonus - stateless functional component with ES6 syntax.
+            See template literals for the `${}` syntax: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+        */
+        const Bonus = ({name}) => (<div>{`Bonus demo - with some param ${name}`}</div>);
+
+        ReactDOM.render(
+            <Bonus name="Foo" />,
+            document.getElementById('target5')
+        );
+    </script>
+</body>
+</html>
